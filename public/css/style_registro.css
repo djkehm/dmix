@@ -1,0 +1,39 @@
+.fondo{
+    background: #0000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.bg-img{
+    background: url("../img/fondo2.jpg");
+    background-size: cover;
+}
+.bg-img2{
+    background: url("../img/fondo.jpg");
+    background-size: cover;
+}
+.logo{
+    /*
+    Siempre que quieres que una imagen sea responsiva, defines solo una dimension de las dos
+    o defines el ancho y el alto automatico
+    o defines el alto y el ancho es automatico
+    */
+    cursor: pointer;
+    height: 45px;
+    width: auto;
+} 
+.logo-nav{
+    position: center;
+}
+.centro{
+    display:block;
+    margin:auto;
+}
+.fondo__nav{
+    background: #000000;
+}

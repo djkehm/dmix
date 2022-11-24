@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css?family=Monserrat:500');
+
+.logo{
+    /*
+    Siempre que quieres que una imagen sea responsiva, defines solo una dimension de las dos
+    o defines el ancho y el alto automatico
+    o defines el alto y el ancho es automatico
+    */
+    height: 45px;
+    width: auto;
+    cursor:pointer;
+} 
+
+.portada{
+    height: 500;
+    width: auto;
+}
+
+.fondo{
+    background-color: #000000;
+}
+
+.fondoFooter{
+    background-color: #000000;
+}
+
+.fondoFooterC{
+    background-color: #252525;
+}
+
+.fondoXD{
+    background-color: #000000;
+}
+.fondo-dashboard{
+    background-color: #00fffb;
+}
+.posi{
+    position: fixed;
+}
+.centro{
+    display:block;
+    margin:auto;
+}
+.alpha2{
+    background-color: rgba(0, 0, 0, 0.425);
+}
+.alpha{
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+}
+
+.image-fondo2 {
+    background-image: url("../img/fondo.jpg");
+    background-size: cover;
+
+}
+.image-fondo {
+    background-image: url("../img/fondo2.png");
+    background-size: cover;
+
+}
+.fondo_cuenta{
+    background-image: url("../img/fondo_cuenta.jpg");
+    background-size: cover;
+}
+.footer{
+    background-color: #000000;
+    bottom: 0;
+    position: fixed;
+    text-align: center;
+    text-emphasis-color: white;
+}
+#sticky-sidebar {
+    position:fixed;
+    max-width: 20%;
+}
+
+.gradient-btn {
+    height: 4rem;
+    width: 12rem;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 40px;
+    border: none;
+    background: linear-gradient(45deg, #00aeff, #00fffb);
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+.gradient-btn::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 40px;
+    background: linear-gradient(45deg, #00aeff, #00fffb);
+    color: white;
+    z-index: -1;
+    filter: blur(0px);
+    transition: 0,5 ease; 
+}
+
+.gradient-btn:hover::after{
+    filter: blur(15px);
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+li, a, button{
+    font-family: "Monserrat", sans-serif;
+    font-weight:500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.nav__links{
+    list-style: none;
+}
+
+.nav__links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav__links li a{
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover{
+    color: #00e1ff;
+}
+
+button{
+    padding: 9px 25px;
+    background-color: rgb(0, 217, 255,1);
+    border: none;
+    border-radius: 50px;
+    cursor:  pointer;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover{
+    background-color: rgb(0, 217, 255, 0.8);
+}
+
+@media (max-width:700px){
+    header{
+        flex-direction: column;
+    }
+    .nav__links{
+        padding: 10px 0px;
+    }
+}
+
+
+/*MENU COMENCEMOS*/
+
+.menu-fondo{
+    background: linear-gradient(90deg, #00aeff, #00fffb);
+    color: #fff;
+    
+}
+
+
+/*FONDO INICIO DE SESION*/
+
+.bg-img{
+    background: url("../img/fondo.jpg");
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-img:after{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.174);
+}
+
+/*POSICION LOGO NAVBAR*/
+
+.navbar-logo{
+    position: center;
+}
+
+.opacidad{
+    opacity: 50;
+}

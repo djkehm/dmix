@@ -1,0 +1,96 @@
+.fondo{
+    background: #0000;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.bg-img{
+    background: url("../img/fondo.jpg");
+    background-size: cover;
+}
+
+.logo{
+    /*
+    Siempre que quieres que una imagen sea responsiva, defines solo una dimension de las dos
+    o defines el ancho y el alto automatico
+    o defines el alto y el ancho es automatico
+    */
+    cursor: pointer;
+    height: 45px;
+    width: auto;
+} 
+.logo-nav{
+    position: center;
+}
+.centro{
+    display:block;
+    margin:auto;
+}
+.fondo__nav{
+    background: #000000;
+}
+
+.fodno-dashboard{
+    background-color: aqua;
+}
+.nav__links{
+    list-style: none;
+    color: white;
+}
+
+.nav__links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav__links li a{
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover{
+    color: #00e1ff;
+}
+
+button{
+    padding: 9px 25px;
+    background-color: rgb(0, 217, 255,1);
+    border: none;
+    border-radius: 50px;
+    cursor:  pointer;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover{
+    background-color: rgb(0, 217, 255, 0.8);
+}
+
+@media (max-width:700px){
+    header{
+        flex-direction: column;
+    }
+    .nav__links{
+        padding: 10px 0px;
+    }
+}
+
+.navbar-inverse .nav li a{
+    color: white
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+.fondo{
+    background-color: #000000;
+}
+.fondo_cuenta{
+    background-image: url("../img/fondo_cuenta.jpg");
+    background-size: cover;
+}
