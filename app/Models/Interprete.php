@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Interprete extends Model
 {
     use HasFactory;
-    protected $table = 'intrepetes';
+    protected $table = 'interpretes';
     
     public function mix(){
-        return $this->belongsToMany(Mix::class, 'mix_interpretes', 'interprete_id','mix_id'); 
+        return $this->belongsTo('App\Models\Mix'); 
     }
 }

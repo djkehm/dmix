@@ -15,8 +15,11 @@ class CreateInterpretesTable extends Migration
     {
         Schema::create('interpretes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
+            $table->string('nombre');
+            $table->unsignedBigInteger('mix_id');
             $table->timestamps();
+
+            $table->foreign('mix_id')->references('id')->on('mixes');
         });
     }
 

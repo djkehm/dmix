@@ -16,7 +16,9 @@ class Mix extends Model
     }
 
     public function interprete(){
-        return $this->belongsToMany(Interprete::class, 'mix_interpretes', 'mix_id','intreprete_id')
-            ->withPivot(''); 
+        return $this->hasOne('App\Models\Interprete');
+    }
+    public function genero_mix(){
+        return $this->belongsToMany(Genero::class,'mix_genero','mix_id','genero_id');
     }
 }

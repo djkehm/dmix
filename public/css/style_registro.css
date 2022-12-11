@@ -37,3 +37,6 @@
 .fondo__nav{
     background: #000000;
 }
+.bg-img3{
+    background-image: url("../img/fondo_registro_dj.jpg");
+}

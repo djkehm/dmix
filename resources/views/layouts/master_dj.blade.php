@@ -11,7 +11,7 @@
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
     <script src="sweetalert2.all.min.js"></script>
-    <title>Hello, world!</title>
+    <title>{{Route::current()->getName()}}</title>
   </head>
   <body>
     <!--NAVBAR-->
@@ -29,8 +29,8 @@
 
           <!--ITEMS CENTRO-->
           <ul class="align-self-center nav__links container d-flex justify-content-center navbar-nav">
-            <li class="nav-item"><a href="#">Catalogo</a></li>
-            <li><a href="#">DJ's</a></li>
+            <li class="nav-item"><a href="{{route('Catalogo')}}">Catalogo</a></li>
+            <li><a href="{{route("Dj's")}}">DJ's</a></li>
             <li><a href="#">Buscar genero</a></li>
             <li><a href="#">Buscar artista</a></li>
           </ul>
@@ -49,7 +49,8 @@
               <ul class="dropdown-menu justify-content-end bg-dark" aria-labelledby="navbarScrollingDropdown">
 
                 <!--ITEMS SEPARADOS-->
-                  <li><a class="dropdown-item nav__links" href="#">Mi cuenta</a></li>
+                  <li><a class="dropdown-item nav__links" href="{{route('Mi cuenta')}}">Mi cuenta</a></li>
+                  <li><a class="dropdown-item nav__links" href="{{route('mis.mix')}}">Mis Mix</a></li>
                   <li><a class="dropdown-item nav__links" href="#">Mis solicitudes</a></li>
                   <li><hr class="dropdown-divider nav__links"></li>
                   <li><a class="dropdown-item nav__links" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
@@ -77,6 +78,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+    <script src="{{asset('js/mas_genero.js')}}"></script>
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

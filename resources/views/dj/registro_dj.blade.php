@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{asset('css/style_registro.css')}}">
         <title>Registrarse</title>
       </head>
-  <body class="bg-img">
+  <body class="bg-img3">
     <header class="fixed-top">
         <nav class="navbar fixes-top navbar-expand-lg navbar-dar fondo__nav sticky-top">
             <div class="container-fluid">
@@ -42,44 +42,26 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{route('usuarios.store')}}">
+                            <form method="POST" action="{{route('djs.store')}}">
                                 @csrf
                                 <div class="mb-4 form-group">
                                     <label for="nombre-txt" class="form-label">Nombre</label>
-                                    <input type="text" id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{old('nombre')}}" placeholder="Nombre y Apellido">
+                                    <input type="text" id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{old('nombre')}}" placeholder="DjEjemplo">
                                 </div>
                                 <div class="mb-4 form-group">
                                     <label for="email" class="form-label">Correo electronico</label>
                                     <input type="text" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}"placeholder="email@example.com">
                                 </div>
-                                <div class="mb-4 form-group">
-                                    <label for="fecha-txt" class="form-label">Fecha de nacimiento</label>
-                                    <input type="date" id="fecha" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror" value="{{old('fecha_nacimiento')}}">
-                                </div>
-                                <div class="mb-4 form-group">
-                                    <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Contraseña">
-                                </div>
-                                <div class="mb-4 form-group">
-                                    <label for="password2" class="form-label">Repetir contraseña</label>
-                                    <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" placeholder="Repetir contraseña">
-                                </div>
+                            
                                 <div class="mb-4 form-group">
                                     <label for="numero" class="form-label">Numero</label>
                                     <input type="text" id="numero-txt" name="numero_celular" class="form-control @error('numero_celular') is-invalid @enderror" value="{{old('numero_celular')}}" placeholder="Numero">
                                 </div>
-                                <div class="mb-4 form-group @error('tipo_usuario') is-invalid @enderror">
-                                    <label for="tipo_usuario">Tipo de usuario: </label>
-                                    <label for="tipo_usuario">DJ: </label>
-                                    <input type="radio" name="tipo_usuario" value="D">
-                                    <label for="tipo_usuario">Cliente: </label>
-                                    <input type="radio" name="tipo_usuario" value="C">
-                                </div>
                                 <div class="card-footer d-grid gap-1 mb-4 text-center">
-                                    <button id="registrar-btn" class="btn btn-outline-info text-center" type="submit">Registrarse</button>
+                                    <button id="registrar-btn" class="btn btn-outline-info text-center" type="submit">Registrarse como DJ</button>
                                 </div>
 
-
+                                
                             </form>
 
 
