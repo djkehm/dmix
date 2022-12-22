@@ -12,7 +12,7 @@ class HomeController extends Controller
         //if(Auth::user()->tipo_usuario=='C'){
             
         //
-        $this->middleware('auth')->except(['login', 'index', 'signin', 'registroDj']);
+        $this->middleware('auth')->except(['login', 'index', 'signin', 'registroDj', 'usuarios_admin', 'djs_admin']);
     }
 
 
@@ -26,27 +26,14 @@ class HomeController extends Controller
     public function signin(){
         return view('registrarse');
     }
-    public function dashboard(){
-        return view('layouts.master');
-    }
-
-    public function micuenta(){
-        return view('cuenta.mi_cuenta');
-    }
-
-    public function catalogo(){
-        return view('mixes.catalogo');
-    }
 
     public function registroDj(){
         return view('dj.registro_dj');
     }
 
-    public function prueba1(){
-        
-        dd('SE PUDO CON DJ');
-    }
-    public function masterDj(){
+
+//DJ
+    public function agregarMix(){
         return view('dj.agregar_mix');
     }
 
@@ -62,8 +49,67 @@ class HomeController extends Controller
         return view('dj.listar_dj');
     }
 
-    public function agregarExtras(){
-        return view('mixes.agregar_extra');
+    public function solicitud_Dj(){
+        return view('dj.solicitudes_dj');
     }
 
+    public function editarDj(){
+        return view('dj.editar_dj');
+    }
+// FIN DJ
+
+
+//CLIENTE
+    public function miCuenta(){
+        return view('cuenta.mi_cuenta');
+    }
+
+    public function solicitudCliente(){
+        return view('solicitudes_cliente');
+    }
+
+//FIN CLIENTE
+
+
+//GENERAL
+    public function catalogo(){
+        return view('mixes.catalogo');
+    }
+
+    public function porDj(){
+        return view('mixes.por_dj');
+    }
+
+
+    public function buscarGenero(){
+        return view('mixes.genero_buscador');
+    }
+
+    public function filtrarGenero(){
+        return view('mixes.filtrar_genero');
+    }
+
+    public function editar_usuario(){
+        return view('cuenta.editar_usuario');
+    }
+
+
+
+//FIN GENERAL
+
+
+//ADMINISTRADOR!    
+
+    public function usuarios_admin(){
+        return view('admin.lista_usuarios');
+    }
+    public function djs_admin(){
+        return view('admin.lista_dj');
+    }
+    public function generos_admin(){
+        return view('admin.lista_generos');
+    }
+    public  function interpretes_admin(){
+        return view('admin.lista_interpretes');
+    }
 }

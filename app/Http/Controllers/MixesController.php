@@ -45,11 +45,14 @@ class MixesController extends Controller
      */
     public function store(Request $request)
     {
+        //OBTENER DATOS DEL USUARIO Y EL ID DEL DJ PARA LA FK
         $mix = new Mix();
         $now = today();
         $auth_id = Auth::user()->id;
         $dj = Usuario::select('djs.id')->join('djs', 'usuarios.id', '=','djs.usuario_id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
 
+
+        //ALMACENAR LOS MIX
         $mix->nombre = $request->nombre;
         $mix->descripcion = $request->descripcion;
         $mix->duracion = $request->duracion;
@@ -57,20 +60,23 @@ class MixesController extends Controller
         $mix->precio = $request->precio;
         $mix->dj_id = $dj;
 
+
+        //ALMACENAR LOS INTERPRETES
         $mix->save();
         $interprete = new Interprete();
         $interprete->nombre = $request->interpretes;
         $interprete->mix_id = $mix->id;
         $interprete->save();
 
+
+        //ALMACENAR RELACION ENTRE GENERO Y MIX
         foreach ($request->input('generos', []) as $i => $id) {
-
-            $generoSelect = Genero::findOrFail($i);
-
-            //$generoSelect->tickets()->syncWithoutDetaching([$mix->id]);
-            
+         $genero = $request->input('generos',[$i]);
+         $generoID = $genero[$i];
+         $generoSelect = Genero::findOrFail($generoID);
+         $generoSelect->mixes()->syncWithoutDetaching([$mix->id]);
         }
-        return [$mix, $interprete, $generoSelect];
+        return redirect()->route('mis.mix');
     }
 
     /**
@@ -90,9 +96,12 @@ class MixesController extends Controller
      * @param  \App\Models\Mix  $mix
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mix $mix)
+    public function edit($id)
     {
         //
+        $mixes = Mix::findOrFail($id);
+        $interprete = Interprete::select('nombre')->where('mix_id', '=', $id);
+        return view('mixes.editar_mix',compact('mixes'));
     }
 
     /**
@@ -102,9 +111,16 @@ class MixesController extends Controller
      * @param  \App\Models\Mix  $mix
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mix $mix)
+    public function update(Request $request, $id)
     {
         //
+        $mixes = Mix::findOrFail($id);
+        $mixes->nombre = $request->nombre;
+        $mixes->descripcion = $request->descripcion;
+        $mixes->duracion = $request->duracion;
+        $mixes->precio = $request->precio;
+        $mixes->save();
+        return redirect()->route('mis.mix');
     }
 
     /**
@@ -113,9 +129,12 @@ class MixesController extends Controller
      * @param  \App\Models\Mix  $mix
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mix $mix)
+    public function destroy($id)
     {
         //
+        $mix = Mix::where('id', '=', $id);
+        $mix->delete();
+        return redirect()->route('mis.mix');
     }
     public function pruebasID(){
         $auth_id = Auth::user()->id;
@@ -126,6 +145,8 @@ class MixesController extends Controller
     }
 
     public function mis_mix(){
+
+        //OBTENER LOS MIX SUBIDO POR 1 DJ CON INICIO DE SESION
         $auth_id = Auth::user()->id;
         $dj = Usuario::select('djs.id')->join('djs', 'usuarios.id', '=','djs.usuario_id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
         $mixes = Mix::select('mixes.id','mixes.nombre as NameMix','mixes.descripcion','mixes.duracion','mixes.fecha_publicacion','mixes.precio','djs.nombre as DjName')
@@ -135,13 +156,21 @@ class MixesController extends Controller
         return view('mixes.mis_mix')->with('mixes', $mixes);
     }
 
-    public function pruebaSelect(){
-        foreach ($request->input('generos', []) as $i => $id) {
+    public function mix_por_dj($dj){
 
-            $generoSelect = Genero::findOrFail($i);
+        //OBTENER LOS MIX SUBIDO POR CADA DJ
+        // $auth_id = Auth::user()->id;
+        // $dj = Usuario::select('djs.id')->join('djs', 'usuarios.id', '=','djs.usuario_id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
 
-            //$generoSelect->tickets()->syncWithoutDetaching([$mix->id]);
-            
-        }
+        $dj_id = $dj;
+        // $mixes = Mix::select('id','mixes.nombre','mixes.descripcion','mixes.duracion','mixes.fecha_publicacion','mixes.precio')
+        // ->where('dj_id', '=', $dj_id)->get();
+
+        $mixes = Mix::where('dj_id', '=', $dj_id)->get();
+    
+        return view('mixes.por_dj')->with('mixes', $mixes);
+
+        //return $mixes;
     }
+
 }

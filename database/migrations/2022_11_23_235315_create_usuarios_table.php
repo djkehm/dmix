@@ -21,6 +21,8 @@ class CreateUsuariosTable extends Migration
             $table->string('numero_celular', 10);
             $table->string('password');
             $table->string('tipo_usuario', 1);
+            $table->string('estado_cuenta', 2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

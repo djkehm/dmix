@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\{Auth, Hash};
 use App\Http\Requests\UsuariosRequest;
-
+use App\Http\Controllers\DjsController;
 
 class UsuariosController extends Controller
 {
@@ -18,6 +19,8 @@ class UsuariosController extends Controller
     public function index()
     {
         //
+        $usuarios = Usuario::all();
+        return view('admin.lista_usuarios', compact('usuarios'));
     }
 
     /**
@@ -41,11 +44,18 @@ class UsuariosController extends Controller
         $usuario = new Usuario();
         $usuario->nombre = $request->nombre;
         $usuario->email = $request->email;
+        $edad = Carbon::createFromDate($request->fecha_nacimiento)->age;
         $usuario->fecha_nacimiento = $request->fecha_nacimiento;
         $usuario->numero_celular = $request->numero_celular;
         $usuario->password = Hash::make($request->password);
         $usuario->tipo_usuario = $request->tipo_usuario;
-        $usuario->save();
+        if($edad<18){
+            $mensaje = 'Tienes que ser mayor de 18 años.';
+            return back()->withErrors($mensaje);
+        }else{
+            $usuario->save();
+        }
+        
         if($usuario->tipo_usuario == 'D'){
             return redirect()->route('registroDj');
             //return dd('Elegiste Dj LPM');
@@ -89,9 +99,22 @@ class UsuariosController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuario $usuario)
+    public function update(Request $request, $id)
     {
         //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->nombre = $request->nombre;
+        $usuario->email = $request->email;
+        $usuario->numero_celular = $request->numero_celular;
+
+        $usuario->save();
+
+        if($usuario->tipo_usuario == 'C'){
+            return redirect()->route('Mis datos');
+        }else{
+            return redirect()->route('Mi Cuenta DJ');
+        }
+        
     }
 
     /**
@@ -114,8 +137,10 @@ class UsuariosController extends Controller
             
             if($usuario->tipo_usuario=='C'){
                 return redirect()->route('Catalogo');
-            }else{
-                return redirect()->route('master.dj');
+            }elseif($usuario->tipo_usuario == 'D'){
+                return redirect()->route('Catalogo');
+            }elseif($usuario->tipo_usuario == 'A'){
+                return redirect()->route('Usuarios');
             }
             //return redirect()->route('prueba2');
             
@@ -134,4 +159,14 @@ class UsuariosController extends Controller
 
         return Auth::user()->tipo_usuario;
     }
+
+    public function editar_usuario($id){
+        $usuarios = Usuario::findOrFail($id);
+
+        //return $usuarios;
+
+        return view('cuenta.editar_usuario', compact('usuarios'));
+    }
+
+
 }

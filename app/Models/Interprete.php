@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Interprete extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'interpretes';
-    
-    public function mix(){
-        return $this->belongsTo('App\Models\Mix'); 
+    public $timestamps = false;
+
+
+    public function mixes(){
+        return $this->belongsToMany(Mix::class,'mix_interpretes','interprete_id','mix_id');
     }
 }

@@ -16,9 +16,6 @@
          <img class="logo" src="{{asset('img/logo.png')}}" alt="logo">
          <nav>
           <ul class="nav__links container-fluid">
-            <li><a href="{{route('home')}}">Inicio</a></li>
-            <li><a href="#">Quienes Somos</a></li>
-            <li><a href="#">Como Funciona</a></li>
           </ul>
          </nav>
          

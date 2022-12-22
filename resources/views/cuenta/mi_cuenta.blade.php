@@ -1,15 +1,15 @@
-@extends('layouts/master')
+@extends('layouts.master')
 
 @section('contenido-principal')
 
 
-<body class="bg-cuenta">
-    <div class="container overflow-hidden pt-5 rounded-bottom text-white mb-0 table-responsive-sm">
-        <div class="row gx-5 rounded-bottom mb-0 fondo text-white">
-            <div class="col rounded-bottom mb-0">
-                <div class="text-white mb-0">
-
-                        <table class="table g-0 text-white">
+<body>
+    <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm pb-3">
+        <div class="row gx-5 rounded-bottom mb-0">
+            <div class="col rounded-bottom pb-3">
+                <div class="text-white mb-0 pb-3">
+                    <h6>Información cliente</h6>
+                        <table class="table g-0 text-white fondo pb-3">
                             <tbody>
                                 <tr>
                                     <th scope="row" class="pt-4 pb-4 ps-5">
@@ -36,12 +36,10 @@
                             </tbody>  
                         </table>
                 </div>
-        </div>
-        <div class="col-sm-6 col-md-8 pt-3 ps-5">
-            ¿Desea editar su informacion?
-        </div>
+
         <div class="col-6 col-md-4  pb-3">
-            <a class="cta"><button>Editar</button></a>
+            ¿Desea editar su informacion?
+            <a class="cta" href="{{route('Editar Datos', Auth::user()->id)}}"><button>Editar</button></a>
         </div>
     </div>
 

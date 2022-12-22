@@ -16,9 +16,11 @@ class CreateDjsTable extends Migration
         Schema::create('djs', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',20);
-            $table->string('correo_electronico', 50);
+            $table->string('email', 50);
             $table->string('numero_celular', 10);
             $table->unsignedBigInteger('usuario_id');
+            $table->string('estado_cuenta', 2);
+            $table->softDeletes();
             $table->timestamps();
 
             //relaciones

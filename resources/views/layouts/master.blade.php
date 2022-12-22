@@ -31,8 +31,7 @@
           <ul class="align-self-center nav__links container d-flex justify-content-center navbar-nav">
             <li class="nav-item"><a href={{route('Catalogo')}}>Catalogo</a></li>
             <li><a href="{{route("Dj's")}}">DJ's</a></li>
-            <li><a href="#">Buscar genero</a></li>
-            <li><a href="#">Buscar artista</a></li>
+            <li><a href="{{route("Buscar Genero")}}">Buscar genero</a></li>
           </ul>
           <!--ITEMS CENTRO-->
 
@@ -49,8 +48,8 @@
               <ul class="dropdown-menu justify-content-end bg-dark" aria-labelledby="navbarScrollingDropdown">
 
                 <!--ITEMS SEPARADOS-->
-                  <li><a class="dropdown-item nav__links" href="#">Mi cuenta</a></li>
-                  <li><a class="dropdown-item nav__links" href="#">Mis solicitudes</a></li>
+                  <li><a class="dropdown-item nav__links" href="{{route('Mis datos')}}">Mi cuenta</a></li>
+                  <li><a class="dropdown-item nav__links" href="{{route('Mis Solicitudes')}}">Mis solicitudes</a></li>
                   <li><hr class="dropdown-divider nav__links"></li>
                   <li><a class="dropdown-item nav__links" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
                 <!--ITEMS SEPARADOS-->

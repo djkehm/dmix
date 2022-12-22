@@ -17,8 +17,6 @@ class CreateMixGenerosTable extends Migration
             $table->unsignedBigInteger('mix_id');
             $table->unsignedBigInteger('genero_id');
             $table->primary(['mix_id','genero_id']);
-            $table->timestamps();
-
 
             //RELACIONES:
             $table->foreign('mix_id')->references('id')->on('mixes');

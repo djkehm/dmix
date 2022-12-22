@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Genero;
 use Illuminate\Http\Request;
+use App\Models\Mix;
 
 class GenerosController extends Controller
 {
@@ -18,6 +19,7 @@ class GenerosController extends Controller
         $generos = Genero::all();
         
         return view('dj.agregar_mix', compact('generos'));
+        
     }
 
     /**
@@ -84,5 +86,25 @@ class GenerosController extends Controller
     public function destroy(Genero $genero)
     {
         //
+    }
+    public function buscarGenero()
+    {
+        //
+        $generos = Genero::all();
+        
+        return view('mixes.genero_buscador', compact('generos'));
+    }
+
+    public function filtrarGenero($id){
+        $mixes = Mix::join('mix_generos', 'mixes.id', '=', 'mix_generos.mix_id')
+        ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
+        ->where('generos.id', '=', $id)->get();
+
+        return view('mixes.filtrar_genero', compact('mixes'));
+    }
+
+    public function generos_admin(){
+        $generos = Genero::all();
+        return view('admin.lista_generos', compact('generos'));
     }
 }

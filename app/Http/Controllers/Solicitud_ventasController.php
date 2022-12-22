@@ -44,18 +44,29 @@ class Solicitud_ventasController extends Controller
         $id_user = Auth::user()->id ;
         $now = today();
         $verificar_solicitud = Solicitud_venta::select('solicitud_ventas.id')->where([['usuario_id','=', $id_user],['mix_id','=', $id]])->get();
+        $verificar_dj = Dj::where('usuario_id', '=', $id_user);
         if(!$verificar_solicitud->count()){
-             $solicitud = new Solicitud_venta();
-             $solicitud->usuario_id = $id_user;
-             $solicitud->mix_id = $id;
-             $solicitud->fecha_solicitud = $now;
-             $solicitud->fecha_actualizacion = $now;
-             $solicitud->estado = "P";
-             $solicitud->save();
 
-            return $solicitud;
+            if(!$verificar_dj->count()){
+                
+                $solicitud = new Solicitud_venta();
+                $solicitud->usuario_id = $id_user;
+                $solicitud->mix_id = $id;
+                $solicitud->fecha_solicitud = $now;
+                $solicitud->fecha_actualizacion = $now;
+                $solicitud->estado = "P";
+                $solicitud->save();
+                
+                $respuestas = 'Solicitud realizada';
+                return back()->withErrors($respuestas);
+            }else{
+                $respuesta = 'Usted es el creador de este Mix, No puede autosolicitarlo';
+                return back()->withErrors($respuesta);  
+            }
+             
         }else{
-            return 'Ya tiene una solicitud en este mix';
+            $respuesta = 'Ya cuenta con una solicitud para este Mix';
+            return back()->withErrors($respuesta);
         }
         
     }
@@ -91,15 +102,16 @@ class Solicitud_ventasController extends Controller
      * @param  \App\Models\Solicitud_venta  $solicitud_venta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Solicitud_venta $solicitud_venta)
+    public function update($id, $estado)
     {
         //
         $now = today();
         $solicitud = Solicitud_venta::findOrFail($id);
         $solicitud->estado = $estado;
         $solicitud->fecha_actualizacion = $now;
+        $solicitud->save();
 
-        return 'Ha sido actualizada';
+        return redirect()->back();
     }
 
     /**
@@ -113,23 +125,24 @@ class Solicitud_ventasController extends Controller
         //
     }
 
-    public function misSolicitudesDj(){
-        $auth_id = Auth::user()->id;
-        $dj = Solicitud_venta::select('djs.id')->join('mixes', 'mixes.id', '=','solicitud_ventas.mix_id')->join('djs', 'mixes.dj_id', '=', 'djs.id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
-        $solicitud = Solicitud_venta::select('mixes.id','estado')
-        ->join('mixes', 'mixes.id', '=', 'solicitud_ventas.mix_id')
-        ->where('mixes.dj_id', '=', $dj)->get();
     
-        // return view('mixes.mis_mix')->with('mixes', $mixes);
-        return $solicitud;
-    }
-
     public function solicitud_cliente(){
         $auth_id = Auth::user()->id;
-        $solicitud = Solicitud_venta::select('mixes.id','estado')
-        ->join('mixes', 'solicitud_ventas.mix_id', '=', 'mixes.id')
-        ->where('solicitud_ventas.usuario_id', '=', $auth_id)->get();
+        $solicitudes= Solicitud_venta::where('solicitud_ventas.usuario_id', '=', $auth_id)->get();
 
-        return $solicitud;
+        return view('solicitudes_cliente')->with('solicitudes', $solicitudes);
+    }
+
+    public function solicitud_dj(){
+        $auth_id = Auth::user()->id;
+        $dj = Dj::select('djs.id')->where('usuario_id', '=',$auth_id)->value('id');
+        $solicitudes= Solicitud_venta::join('mixes','mixes.id', '=', 'mix_id')
+        ->join('usuarios','usuario_id','=','usuarios.id')
+        ->select('solicitud_ventas.id','usuarios.nombre as nombreClie', 'mixes.nombre', 'usuarios.numero_celular', 'estado', 'usuarios.email','fecha_actualizacion','mixes.precio')
+        ->where('mixes.dj_id', '=', $dj)->get();
+
+        return view('dj.solicitudes_dj')->with('solicitudes', $solicitudes);
+        //return $solicitudes;
+
     }
 }

@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mix;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Genero extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     protected $table = 'generos';
+    public $timestamps = false;
 
-    public function genero_mix(){
-        return $this->belongsToMany(Mix::class,'mix_genero','genero_id','mix_id');
+    public function mixes(){
+        return $this->belongsToMany(Mix::class,'mix_generos','genero_id','mix_id');
     }
 }

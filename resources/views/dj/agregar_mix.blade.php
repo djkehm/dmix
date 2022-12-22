@@ -12,8 +12,8 @@
         <div class="mt-3">
             <div class="col-8 col-md-5 col-lg-4 mx-auto">
                 <div class="card alpha2">
-                    <div class="card-header alpha2 text-light text-center bg-black">
-                        <span>REGISTRARSE</span>
+                    <div class="card-header alpha2 text-center bg-black">
+                        <span>Agregar Mix</span>
                 </div>
                 <div class="card-body alpha">
 
@@ -35,7 +35,7 @@
                         
                         <div class="mb-4 form-group">
                             <label for="nombre-txt" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre y Apellido">
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre del Mix">
                         </div>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Ingrese la descripción" id="descripcion" name="descripcion" style="height: 100px"></textarea>
@@ -66,12 +66,60 @@
                         <label for="Generos">Generos</label>
                         <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
                         <div class="input-group">
-                            <select name="generos[]" class="form-control col-md-6">
+                            <select name="generos[]" class="js-example-basic-single col-md-6">
                                 @foreach( $generos as $genero)
-                                    <option value="">{{ $genero->nombre }}</option>
+                                    <option value="{{ $genero->id }}">{{ $genero->nombre }}</option>
                                 @endforeach
                             </select>
-                        </div>                     
+                        </div>
+                        <select class="form-control" id="search" style="width:500px;" name="user_id"></select>
+                        <script type="text/javascript">
+
+                            var path = {{route('busqueda')}};
+                        
+                          
+                        
+                            $('#search').select2({
+                        
+                                placeholder: 'Select an user',
+                        
+                                ajax: {
+                        
+                                  url: path,
+                        
+                                  dataType: 'json',
+                        
+                                  delay: 250,
+                        
+                                  processResults: function (genero) {
+                        
+                                    return {
+                        
+                                      results:  $.map(genero, function (item) {
+                        
+                                            return {
+                        
+                                                text: item.nombre,
+                        
+                                                id: item.id
+                        
+                                            }
+                        
+                                        })
+                        
+                                    };
+                        
+                                  },
+                        
+                                  cache: true
+                        
+                                }
+                        
+                              });
+                        
+                          
+                        
+                        </script>
                         
                         
 

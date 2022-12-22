@@ -11,6 +11,9 @@
     <script src="sweetalert2.min.js"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
     <script src="sweetalert2.all.min.js"></script>
+
+    <link href="{{asset('dist/css/select2.min.css')}}" rel="stylesheet" />
+    <script src="{{asset('dist/js/select2.min.js')}}"></script>
     <title>{{Route::current()->getName()}}</title>
   </head>
   <body>
@@ -31,8 +34,7 @@
           <ul class="align-self-center nav__links container d-flex justify-content-center navbar-nav">
             <li class="nav-item"><a href="{{route('Catalogo')}}">Catalogo</a></li>
             <li><a href="{{route("Dj's")}}">DJ's</a></li>
-            <li><a href="#">Buscar genero</a></li>
-            <li><a href="#">Buscar artista</a></li>
+            <li><a href="{{route("Buscar Genero")}}">Buscar genero</a></li>
           </ul>
           <!--ITEMS CENTRO-->
 
@@ -49,9 +51,9 @@
               <ul class="dropdown-menu justify-content-end bg-dark" aria-labelledby="navbarScrollingDropdown">
 
                 <!--ITEMS SEPARADOS-->
-                  <li><a class="dropdown-item nav__links" href="{{route('Mi cuenta')}}">Mi cuenta</a></li>
+                  <li><a class="dropdown-item nav__links" href="{{route('Mi Cuenta DJ')}}">Mi cuenta</a></li>
                   <li><a class="dropdown-item nav__links" href="{{route('mis.mix')}}">Mis Mix</a></li>
-                  <li><a class="dropdown-item nav__links" href="#">Mis solicitudes</a></li>
+                  <li><a class="dropdown-item nav__links" href={{route('Solicitudes')}}>Mis solicitudes</a></li>
                   <li><hr class="dropdown-divider nav__links"></li>
                   <li><a class="dropdown-item nav__links" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
                 <!--ITEMS SEPARADOS-->

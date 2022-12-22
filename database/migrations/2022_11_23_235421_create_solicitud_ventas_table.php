@@ -19,8 +19,8 @@ class CreateSolicitudVentasTable extends Migration
             $table->unsignedBigInteger('mix_id');
             $table->date('fecha_solicitud');
             $table->date('fecha_actualizacion');
+            $table->softDeletes();
             $table->string('estado');
-            $table->timestamps();
 
             //RELACIONES:
             $table->foreign('usuario_id')->references('id')->on('usuarios');

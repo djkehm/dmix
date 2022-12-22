@@ -12,6 +12,24 @@
 @section('contenido-principal')
 
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm">
+  @if($errors->any())
+    
+        <ul class="mb-0">
+          @foreach ($errors->all() as $error)
+            @if ($error == 'Solicitud realizada')
+              <div class='alert alert-success'>
+                <li>{{$error}}</li>
+              </div>
+            @else
+              <div class='alert alert-danger'>
+                <li>{{$error}}</li>
+              </div>
+            @endif
+          @endforeach
+        </ul>
+    
+  @endif
+
     @foreach($mixes as $mix)
     <div class="row gx-5 rounded mb-0 pb-3">
        
@@ -30,7 +48,11 @@
                       <tr><td>Fecha de publicación: {!! $mix->fecha_publicacion !!}</td></tr>
                       <tr><td>Precio: ${{number_format( $mix->precio  ,"0",".",".")}}</td></tr>
                       <tr><td>Dj: {!! $mix->dj->nombre !!}</td></tr>
-                        
+                      <tr><td>Generos: @foreach ($mix->generos as $genero)
+                        {!! $genero->nombre !!},
+                      @endforeach
+                      </td></tr>
+                      <tr><td>Interpete: {!!$mix->interprete->nombre!!}</td></tr>
                   </tbody>
                 
                   <tfoot>
@@ -48,6 +70,7 @@
         </div>
         
     </div>
+   
     @endforeach
   </div>
 

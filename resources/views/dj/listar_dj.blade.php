@@ -29,7 +29,9 @@
                       <tr><td>Nombre:</td></tr>
                       <td> {!! $dj->nombre !!}</td>
   
-                  
+                      <td>
+                        <a class="cta" href={{ route('mixDj',$dj->id)}}><button>Ver Mixes</button></a>
+                      </td>
                     </tbody>
                 
                 </table>

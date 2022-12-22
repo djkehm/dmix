@@ -3,11 +3,11 @@
 @section('contenido-principal')
 
 
-<body class="bg-cuenta">
-    <div class="container overflow-hidden pt-5 rounded-bottom text-white mb-0 table-responsive-sm pb-3">
-        <div class="row gx-5 rounded-bottom mb-0 text-white">
-            <div class="col rounded-bottom pb-3">
-                <div class="text-white mb-0 fondo pb-3">
+<body>
+    <div class="container overflow-hidden pt-5 rounded-bottom  mb-0 table-responsive-sm pb-3">
+        <div class="row gx-5 rounded-bottom mb-0 ">
+            <div class="col rounded-bottom">
+                <div class=" mb-0 pb-3">
                     <h6>Información cliente</h6>
                         <table class="table g-0 text-white pb-3 fondo">
                             <tbody>
@@ -36,14 +36,22 @@
                             </tbody>  
                         </table>
                 </div>
-
+            </div>
+            <div class="col-sm-6 col-md-8 ps-5">
+                ¿Desea editar su informacion de cliente?
+            </div>
+            <div class="col-6 col-md-4">
+                
+                <a class="cta" href="{{route('Editar Datos', Auth::user()->id)}}"><button>Editar</button></a>
+            </div>
+            <div>
                 @foreach($djs as $dj)
-                <div class="text-white mb-0 pt-5">
-                    
+                <div class=" mb-0 pt-2">
+                    <h6>Información DJ</h6>
                         <table class="table g-0 text-white fondo">
                             
                             <tbody>
-                                <h6>Información DJ</h6>
+                                
                                 <tr>
                                     <th scope="row" class="pt-4 pb-4 ps-5">
                                         <i class="fa-regular fa-user"></i>
@@ -66,12 +74,14 @@
                 </div>
                 @endforeach
         </div>
-        <div class="col-sm-6 col-md-8 pt-3 ps-5">
-            ¿Desea editar su informacion?
-        </div>
-        <div class="col-6 col-md-4  pb-3">
-            <a class="cta"><button>Editar</button></a>
-        </div>
+        @foreach($djs as $dj)
+            <div class="col-sm-6 col-md-8 pt-3 ps-5">
+                ¿Desea editar su informacion de DJ?
+            </div>
+            <div class="col-6 col-md-4  pb-3">
+                <a class="cta" href={{ route('Editar DJ', $dj->id)}}><button>Editar</button></a>
+            </div>
+        @endforeach
     </div>
 
 </body>

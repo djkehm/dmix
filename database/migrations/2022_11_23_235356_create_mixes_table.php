@@ -22,6 +22,7 @@ class CreateMixesTable extends Migration
             $table->integer('precio');
             $table->unsignedBigInteger('dj_id');
             $table->timestamps();
+            $table->softDeletes();
             
             //Relaciones:
             $table->foreign('dj_id')->references('id')->on('djs');

@@ -72,9 +72,12 @@ class DjsController extends Controller
      * @param  \App\Models\Dj  $dj
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dj $dj)
+    public function edit($id)
     {
         //
+        $djs = Dj::findOrFail($id);
+
+        return view('dj.editar_dj', compact('djs'));
     }
 
     /**
@@ -84,9 +87,17 @@ class DjsController extends Controller
      * @param  \App\Models\Dj  $dj
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dj $dj)
+    public function update(Request $request, $id)
     {
         //
+        $dj = Dj::findOrFail($id);
+        $dj->nombre = $request->nombre;
+        $dj->email = $request->email;
+        $dj->numero_celular = $request->numero_celular;
+
+        $dj->save();
+
+        return redirect()->route('Mi Cuenta DJ');
     }
 
     /**
@@ -111,11 +122,25 @@ class DjsController extends Controller
     public function extraerDatosDj(){
         $auth_id = Auth::user()->id;
         $djID = Usuario::select('djs.id')->join('djs', 'usuarios.id', '=','djs.usuario_id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
-        $djs = Dj::select('djs.nombre','djs.email','djs.numero_celular')
+        $djs = Dj::select('djs.id','djs.nombre','djs.email','djs.numero_celular')
         ->join('usuarios', 'usuarios.id', '=', 'djs.usuario_id')
         ->where('djs.id', '=', $djID)->get();
     
         return view('dj.mi_cuenta')->with('djs', $djs);
     }
     
+    public function djs_admin(){
+        $djs = DJ::all();
+        return view('admin.lista_dj', compact('djs'));
+    }
+
+    public function eliminarDjAdmin($id){
+        
+        $dj = Dj::findOrFail($id);
+        
+        $mixes = Mix::where('dj_id', '=', $id)->delete();
+
+        return $dj->usuario_id;
+        
+    }
 }
