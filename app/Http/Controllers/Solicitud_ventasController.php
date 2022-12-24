@@ -44,7 +44,7 @@ class Solicitud_ventasController extends Controller
         $id_user = Auth::user()->id ;
         $now = today();
         $verificar_solicitud = Solicitud_venta::select('solicitud_ventas.id')->where([['usuario_id','=', $id_user],['mix_id','=', $id]])->get();
-        $verificar_dj = Dj::where('usuario_id', '=', $id_user);
+        $verificar_dj = Mix::where('mixes.id', '=', $id)->join('djs', 'dj_id' ,'=', 'djs.id')->where('djs.usuario_id', '=', $id_user);
         if(!$verificar_solicitud->count()){
 
             if(!$verificar_dj->count()){
