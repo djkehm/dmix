@@ -158,13 +158,18 @@ Route::middleware(['auth', 'solo_usuario_dj'])-> group(function(){
 });
 
 Route::middleware(['auth', 'solo_usuario_admin'])-> group(function(){
-        //USUARIOS-ADMIN
+    //USUARIOS-ADMIN
     Route::get('/admin/usuarios', [HomeController::class, 'usuarios_admin'])->name('Usuarios');
     Route::get('/admin/usuarios', [UsuariosController::class, 'index'])->name('Usuarios');
+    Route::get('/admin/usuario/inhabilitar/{id}', [UsuariosController::class, 'inhabilitar_user'])->name('Eliminar Usuario');
+    Route::get('/admin/usuario/verDJ/{id}', [UsuariosController::class, 'rediAdminDj'])->name('Datos como DJ');
+
+
     //DJS-ADMIN
     Route::get('/admin/djs', [HomeController::class, 'djs_admin'])->name("DJ's");
     Route::get('/admin/djs', [DjsController::class, 'djs_admin'])->name("DJ's");
     Route::get('/admin/djs/eliminar/{id}', [DjsController::class, 'eliminarDjAdmin'])->name('Eliminar DJ');
+
     
 
     //GENEROS-ADMIN

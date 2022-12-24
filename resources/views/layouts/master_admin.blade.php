@@ -15,6 +15,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
     <title>{{Route::current()->getName()}}</title>
   </head>
   <body>
@@ -78,6 +81,11 @@
     <script src="https://kit.fontawesome.com/6358d70998.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <!-- Option 2: Separate Popper and Bootstrap JS -->
 
     <script src="{{asset('js/boton_eliminar.js')}}"></script>
@@ -95,12 +103,9 @@
       }
     </script>
 
-    <script>
-      function alert( $mensaje )
-    {
-        echo "<script>alert( '".addslashes($mensaje)."' );</script>";
-    }
-    </script>
+    @yield('js')
+
+
 
 
     <!--

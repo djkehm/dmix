@@ -51,8 +51,9 @@
                       <tr><td>Generos: @foreach ($mix->generos as $genero)
                         {!! $genero->nombre !!},
                       @endforeach
-                      </td></tr>
-                      <tr><td>Interpete: {!!$mix->interprete->nombre!!}</td></tr>
+                      <tr><td>Interpretes: @foreach ($mix->interpretes as $interprete)
+                        {!! $interprete->nombre !!},
+                      @endforeach
                   </tbody>
                 
                   <tfoot>

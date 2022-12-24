@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\{Auth, Hash};
 use App\Http\Requests\UsuariosRequest;
 use App\Http\Controllers\DjsController;
+use App\Models\Dj;
 
 class UsuariosController extends Controller
 {
@@ -134,6 +135,13 @@ class UsuariosController extends Controller
         if(Auth::attempt($credenciales)){
             //CREDENCIALES CORRECTAS
             $usuario = Usuario::where('email',$request->email)->first();
+
+
+            if($usuario->estado_cuenta == 'IA'){
+                return back()->withErrors('Has sido inhabilitado por el administrador. Si quieres mas información toma contacto con administracion@dmix.cl');
+            }elseif($usuario->estado_cuenta == 'BU'){
+                return back()->withErrors('Esta cuenta fue borrada por el usuario.');
+            }
             
             if($usuario->tipo_usuario=='C'){
                 return redirect()->route('Catalogo');
@@ -142,6 +150,7 @@ class UsuariosController extends Controller
             }elseif($usuario->tipo_usuario == 'A'){
                 return redirect()->route('Usuarios');
             }
+
             //return redirect()->route('prueba2');
             
         }else {
@@ -166,6 +175,26 @@ class UsuariosController extends Controller
         //return $usuarios;
 
         return view('cuenta.editar_usuario', compact('usuarios'));
+    }
+    
+
+    public function inhabilitar_user($id){
+        $usuario = Usuario::findOrFail($id);
+        $dj = Dj::where('usuario_id', '=', $id)->where('estado_cuenta', '=', 'A')->get();
+
+        if(!$dj->count()){
+            $usuario->estado_cuenta = 'IA';
+            $usuario->save();
+            return redirect()->route('Usuarios')->with('mensaje', 'ok');
+        }else{
+            return redirect()->route('Usuarios')->with('error', 'dj');
+        }  
+    }
+
+    public function rediAdminDj($id){
+        $djs = Dj::where('usuario_id', '=', $id)->get();
+
+        return view('admin.lista_dj',compact('djs'));
     }
 
 
