@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use App\Http\Requests\DjsRequest;
 use App\Models\Mix;
+use App\Models\Solicitud_venta;
 class DjsController extends Controller
 {
     /**
@@ -134,13 +135,21 @@ class DjsController extends Controller
         return view('admin.lista_dj', compact('djs'));
     }
 
-    public function eliminarDjAdmin($id){
+    public function validacionContenido($id){
         
-        $dj = Dj::findOrFail($id);
-        
-        $mixes = Mix::where('dj_id', '=', $id)->delete();
+        $dj = DJ::findOrFail($id);
 
-        return $dj->usuario_id;
+        $mixes = Mix::where('dj_id', '=', $dj->id)->get();
+
+        $solicitudes = Solicitud_venta::join('mixes', 'mix_id', '=', 'mixes.id')
+        ->join('djs', 'dj_id', '=', 'djs.id')
+        ->where('mixes.dj_id', '=', $dj->id)->get();
+
+        if($mixes->count()<>0 || $solicitudes->count()<>0){
+            return $solicitudes;
+        }else{
+            return 'No funciono';
+        }
         
     }
 }
