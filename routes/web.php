@@ -90,7 +90,7 @@ Route::get('/tipo_usuario', [UsuarioController::class, 'tipo_usuario'])->name('t
 Route::get('/ranking/prueba', [MixesController::class, 'ranking_mix']);
 Route::get('/ranking/dj', [MixesController::class, 'ranking_dj'])->name('Rankind DJ');
 Route::get('/ranking/generos', [MixesController::class, 'ranking_genero'])->name('Ranking Genero');
-Route::get('/ranking/interpretes', [MixesController::class, 'ranking_interpretes']);
+Route::get('/ranking/interpretes', [MixesController::class, 'ranking_interpretes'])->name('Ranking Interprete');
 
 
 //Route::resource('/djs', DjsController::class);

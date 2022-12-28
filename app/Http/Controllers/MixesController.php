@@ -238,7 +238,7 @@ class MixesController extends Controller
     }
 
     public function ranking_interpretes(){
-        $ri = Solicitud_venta::selectRaw("count(solicitud_ventas.mix_id) as cantidad")
+        $ris = Solicitud_venta::selectRaw("count(solicitud_ventas.mix_id) as cantidad")
         ->select('interpretes.id','interpretes.nombreIn', Solicitud_venta::raw('count(solicitud_ventas.mix_id)'))
         ->join('mixes', 'solicitud_ventas.mix_id', '=', 'mixes.id')
         ->join('mix_interpretes', 'mix_interpretes.mix_id', '=', 'mixes.id')
@@ -248,7 +248,7 @@ class MixesController extends Controller
         ->orderBy(Solicitud_venta::raw('count(solicitud_ventas.mix_id)'), 'DESC')->take(3)
         ->get();
 
-        return $mixes;
+        return redirect()->route('Buscar Interpretes')->with('ris', $ris);
     }
 
     public function filtroGenero(Request $request){
