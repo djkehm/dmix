@@ -39,6 +39,7 @@
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm p-3">
   
     @foreach($djs as $dj)
+    @if($dj->estado_cuenta == 'A')
     <div class="row gx-5 rounded mb-0 pb-3">
        
         <div class="col rounded-bottom mb-0">
@@ -66,6 +67,7 @@
         </div>
         
     </div>
+    @endif
     @endforeach
   </div>
 

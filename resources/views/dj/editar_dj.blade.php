@@ -35,7 +35,7 @@
 
                             <div class="mb-4 form-group">
                                 <label for="nombre-txt" class="form-label">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{$djs->nombre}}" placeholder="DjEjemplo">
+                                <input type="text" id="nombre" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{$djs->nombreDj}}" placeholder="DjEjemplo">
                             </div>
                             <div class="mb-4 form-group">
                                 <label for="email" class="form-label">Correo electronico</label>

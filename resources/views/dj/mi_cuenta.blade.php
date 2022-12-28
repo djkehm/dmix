@@ -81,15 +81,48 @@
             <div class="col-6 col-md-4  pb-3">
                 <a class="cta" href={{ route('Editar DJ', $dj->id)}}><button>Editar</button></a>
             </div>
+            
+            <div class="col-6 col-md-4  pb-3">
+            ¿Desea eliminar la cuenta de Dj?
+            <form action="{{route('Eliminar Cuenta Dj', $dj->id)}}" class='d-inline btn-eliminar'>
+                @method('DELETE')
+                @csrf
+                <button type="submit" name= btn-eliminar title= 'Eliminar cuenta Dj'class="btn btn-danger show-alert-delete-box">
+                  Eliminar Cuenta Dj
+                </button>
+              </form>
+        </div>
         @endforeach
 
-        <div class="col-6 col-md-4  pb-3">
-            ¿Desea eliminar la cuenta de Dj?
-            <a class="cta" href=""><button>Eliminar</button></a>
-        </div>
+        
     </div>
 
 </body>
+
+
+<script>
+
+    $('.btn-eliminar').submit(function(e){
+      e.preventDefault();
+      Swal.fire({
+      title: 'Estas seguro?',
+      text: "Estas seguro que quieres Eliminar tu cuenta como Dj? Perderas toda la informacion como DJ",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.submit();
+          //window.location.href = "{{ route('pruebaJS')}}";
+
+        }
+      })
+    })
+    
+
+  </script>
 
 
 @endsection

@@ -43,12 +43,42 @@
         </div>
 
         <div class="col-6 col-md-4  pb-3">
-            ¿Desea eliminar la cuenta?
-            <a class="cta" href=""><button>Eliminar</button></a>
+            ¿Desea eliminar la cuenta de Dj?
+            <form action="{{route('Eliminar Cuenta Usuario', Auth::user()->id)}}" class='d-inline btn-eliminarUS'>
+                @method('DELETE')
+                @csrf
+                <button type="submit" name='btn-eliminarUS' title= 'Eliminar cuenta Usuario'class="btn btn-danger show-alert-delete-box">
+                  Eliminar Cuenta Usuario
+                </button>
+              </form>
         </div>
     </div>
 
 </body>
+@section('js')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
 
+    $('.btn-eliminarUS').submit(function(e){
+      e.preventDefault();
+      Swal.fire({
+      title: 'Estas seguro?',
+      text: "Estas seguro que quieres Eliminar tu cuenta? Despues de esto no hay vuelta atras",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.submit();
+          //window.location.href = "{{ route('pruebaJS')}}";
 
+        }
+      })
+    })
+    
+
+  </script>
+@endsection
 @endsection

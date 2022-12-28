@@ -11,6 +11,8 @@
 
 @section('contenido-principal')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('rms')<>"")
 @php($rms = session('rms'))
 @if ($rms<>'')
     @foreach ($rms as $rm)
@@ -25,6 +27,9 @@
         //window.alert(@json($rm->nombreMix))
       </script>
 @endif
+@endif
+
+
 
 
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm">
@@ -47,7 +52,7 @@
   @endif
 
   <form class="d-flex mb-3" name="buscador">
-    <input name="buscarpor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{$buscarpor}}">
+    <input name="buscarpor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{$buscarpor ?? ''}}">
     <button class="btn btn-outline-success" type="submit">Buscar por Nombre Mix</button>
   </form>
   

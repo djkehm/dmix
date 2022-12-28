@@ -19,6 +19,9 @@ use App\Http\Controllers\{HomeController, UsuariosController, DjsController, Mix
  //   return view('welcome');
 //});
 
+Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
+Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
+Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
 
 //EDITAR USUARIO
 Route::get('/editar/cuenta/{id}', [UsuariosController::class, 'editar_usuario'])->name('Editar Datos');
@@ -107,7 +110,8 @@ Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])
 Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
 Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
 
-
+//ELIMINAR USUARIO
+Route::get('/eliminar/cuentaUsuario/{id}', [UsuariosController::class, 'destroy'])->name('Eliminar Cuenta Usuario');
 
 //ADMIN
 
@@ -168,9 +172,12 @@ Route::middleware(['auth', 'solo_usuario_dj'])-> group(function(){
     Route::get('/solicitudes/dj', [Solicitud_ventasController::class, 'solicitud_dj'])->name('Solicitudes');
 //PRUEBAS:
 
-    Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
-    Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
-    Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
+    // Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
+    // Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
+    // Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
+
+    //ELIMINAR DJ:
+    Route::get('/eliminar/cuentaDj/{id}', [DjsController::class, 'destroy'])->name('Eliminar Cuenta Dj');
 
 
 });

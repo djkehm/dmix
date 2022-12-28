@@ -125,9 +125,14 @@ class UsuariosController extends Controller
      * @param  \App\Models\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuario $usuario)
+    public function destroy($id)
     {
         //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->estado_cuenta = 'EU';
+        $usuario->save();
+        Auth::logout();
+        return redirect()->route('login');
     }
 
     public function login(Request $request){
@@ -151,7 +156,7 @@ class UsuariosController extends Controller
             //MENSAJE SEGUN ESTADO CUENTA
             if($usuario->estado_cuenta == 'IA'){
                 return back()->withErrors('Has sido inhabilitado por el administrador. Si quieres mas información toma contacto con administracion@dmix.cl');
-            }elseif($usuario->estado_cuenta == 'BU'){
+            }elseif($usuario->estado_cuenta == 'EU'){
                 return back()->withErrors('Esta cuenta fue borrada por el usuario.');
             }
 

@@ -57,7 +57,7 @@ class DjsController extends Controller
         //
         
         $dj = new Dj();
-        $dj->nombre = $request->nombre;
+        $dj->nombreDj = $request->nombre;
         $dj->email = $request->email;
         $dj->numero_celular = $request->numero_celular;
         $dj->usuario_id = $usuario_id = Usuario::latest()->value('id');
@@ -101,7 +101,7 @@ class DjsController extends Controller
     {
         //
         $dj = Dj::findOrFail($id);
-        $dj->nombre = $request->nombre;
+        $dj->nombreDj = $request->nombre;
         $dj->email = $request->email;
         $dj->numero_celular = $request->numero_celular;
 
@@ -116,9 +116,19 @@ class DjsController extends Controller
      * @param  \App\Models\Dj  $dj
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dj $dj)
+    public function destroy($id)
     {
         //
+
+        $dj = Dj::findOrFail($id);
+        $usuario = Usuario::findOrFail($dj->usuario_id);
+        $dj->estado_cuenta = 'EU';
+        $usuario->tipo_usuario = 'C';
+        $dj->save();
+        $usuario->save();
+        Auth::logout();
+        return redirect()->route('login');
+
     }
 
 
@@ -170,7 +180,10 @@ class DjsController extends Controller
 
     public function djContenido($id){
         $dj = Dj::findOrFail($id);
+        $usuario = Usuario::findOrFail($dj->usuario_id);
         $dj->estado_cuenta = 'IA';
+        $usuario->tipo_cuenta = 'C';
+        $usuario->save();
         $dj->save();
         return redirect()->route("DJ's")->with('mensaje', 'ok');
 
