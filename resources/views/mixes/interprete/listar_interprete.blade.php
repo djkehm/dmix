@@ -50,7 +50,7 @@
                       <td> {!! $interprete->nombreIn !!}</td>
   
                       <td>
-                        <a class="cta" href={{ route('Filtro Genero',$interprete->id)}}><button>Ver Mixes</button></a>
+                        <a class="cta" href={{ route('Filtro Interprete',$interprete->id)}}><button>Ver Mixes</button></a>
                       </td>
                     </tbody>
                 

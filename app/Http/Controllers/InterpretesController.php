@@ -134,7 +134,7 @@ class InterpretesController extends Controller
             $interpretes = Interprete::all();
             return view('mixes.interprete.listar_interprete', compact('interpretes', 'buscarporInterprete'));
         }else{
-            $interpretes = Interprete::where('nombreIn', 'like', '%'.$buscarporInterprete.'%')->get();
+            $interpretes = Interprete::where('nombreIn', 'like', '%'.$buscarporInterprete.'%')->distinct()->get();
             return view('mixes.interprete.listar_interprete', compact('interpretes', 'buscarporInterprete'));
         }
 
@@ -143,11 +143,28 @@ class InterpretesController extends Controller
         return view('mixes.interprete.listar_interprete', compact('interpretes', 'buscarporInterprete'));
     }
 
-    public function filtrarGenero($id){
-        $mixes = Mix::select('mixes.*')
-        ->join('mix_interpretes', 'mixes.id', '=', 'mix_interpretes.mix_id')
-        ->join('interpretes', 'mix_interpretes.interprete_id', '=', 'interpretes.id')
-        ->where('interpretes.id', '=', $id)->get();
+    public function filtrarInterprete($id, Request $request){
+        
+
+        $buscarporInterpreteMix = $request->get('buscarporInterpreteMix');
+        if(!$buscarporInterpreteMix){
+            $mixes = Mix::select('mixes.*')
+            ->join('mix_interpretes', 'mixes.id', '=', 'mix_interpretes.mix_id')
+            ->join('interpretes', 'mix_interpretes.interprete_id', '=', 'interpretes.id')
+            ->where('interpretes.id', '=', $id)->get();
+            return view('mixes.interprete.filtrar_interprete', compact('mixes', 'buscarporInterpreteMix'));
+        }else{
+            $mixes = Mix::select('mixes.*')
+            ->join('mix_generos', 'mixes.id', '=', 'mix_generos.mix_id')
+            ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
+            ->join('mix_interpretes', 'mixes.id', '=', 'mix_interpretes.mix_id')
+            ->join('interpretes', 'mix_interpretes.interprete_id', '=', 'interpretes.id')
+            ->where('interpretes.id', '=', $id)
+            ->orWhere('nombreIn', 'like', '%'.$buscarporInterpreteMix.'%')
+            ->orWhere('nombreGe', 'like', '%'.$buscarporInterpreteMix.'%')
+            ->orWhere('nombreMix', 'like', '%'.$buscarporInterpreteMix.'%')->distinct()->get();
+            return view('mixes.interprete.filtrar_interprete', compact('mixes', 'buscarporInterpreteMix'));
+        }
 
         return view('mixes.interprete.filtrar_interprete', compact('mixes'));
     }

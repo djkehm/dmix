@@ -132,7 +132,7 @@ class DjsController extends Controller
     public function extraerDatosDj(){
         $auth_id = Auth::user()->id;
         $djID = Usuario::select('djs.id')->join('djs', 'usuarios.id', '=','djs.usuario_id')->where('djs.usuario_id', '=', $auth_id)->value('djs.id');
-        $djs = Dj::select('djs.id','djs.nombre','djs.email','djs.numero_celular')
+        $djs = Dj::select('djs.id','djs.nombreDj','djs.email','djs.numero_celular')
         ->join('usuarios', 'usuarios.id', '=', 'djs.usuario_id')
         ->where('djs.id', '=', $djID)->get();
     

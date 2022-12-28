@@ -57,7 +57,7 @@
                                         <i class="fa-regular fa-user"></i>
                                         Nombre:
                                     </th>
-                                    <td class="pt-4 pb-4">{!! $dj->nombre !!}</td>
+                                    <td class="pt-4 pb-4">{!! $dj->nombreDj !!}</td>
                                 </tr>
                                 <tr>
                                     <th class="pt-4 pb-4 ps-5" scope="row"><i class="fa-regular fa-envelope"></i>

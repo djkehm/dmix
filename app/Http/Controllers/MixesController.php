@@ -23,7 +23,7 @@ class MixesController extends Controller
     public function index(Request $request)
     {  
 
-        $buscarpor = $request->get('buscarporNombre');
+        $buscarpor = $request->get('buscarpor');
         if(!$buscarpor){
             $mixes = Mix::all();
             return view('mixes.catalogo', compact('mixes', 'buscarpor'));
@@ -188,7 +188,7 @@ class MixesController extends Controller
             return view('mixes.por_dj', compact('mixes', 'buscarporDjMix'));
         }else{
             $mixes = Mix::select('mixes.*')
-            ->where('dj_id', '=', $dj_id)->where('nombreMix', 'like', '%'.$buscarporDjMix.'%')->get();
+            ->where('dj_id', '=', $dj_id)->where('nombreMix', 'like', '%'.$buscarporDjMix.'%')->distinct()->get();
             return view('mixes.por_dj', compact('mixes', 'buscarporDjMix'));
         }
     
@@ -261,7 +261,7 @@ class MixesController extends Controller
         }else{
             $mixes = Mix::join('mix_generos', 'mix_id', '=', 'mixes.id')
                 ->join('generos', 'generos.id', '=', 'genero_id')
-                ->where('generos.id', '=', $filtroGenero)->get();
+                ->where('generos.id', '=', $filtroGenero)->distinct()->get();
 
             return view('mixes.catalogo', compact('mixes', 'generos', 'buscarpor'));
             //return $mixes;

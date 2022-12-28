@@ -105,6 +105,7 @@ Route::get('/solicitudes/usuario', [Solicitud_ventasController::class, 'solicitu
 //INTERPRETE:
 Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
 Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
+Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
 
 
 
@@ -169,6 +170,8 @@ Route::middleware(['auth', 'solo_usuario_dj'])-> group(function(){
 
     Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
     Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
+    Route::get('/buscar/interpretes/{id}',[InterpretesController::class, 'filtrarInterprete'])->name('Filtro Interprete');
+
 
 });
 

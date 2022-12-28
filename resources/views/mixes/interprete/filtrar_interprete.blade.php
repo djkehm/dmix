@@ -31,6 +31,12 @@
         </ul>
       </div>     
   @endif
+
+  <form class="d-flex mb-3 p-3" name="buscador">
+    <input name="buscarporInterpreteMix" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{$buscarporInterpreteMix}}">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+
     @foreach($mixes as $mix)
     <div class="row gx-5 rounded mb-0 pb-3">
        
@@ -50,6 +56,9 @@
                       <tr><td>Precio: ${{number_format( $mix->precio  ,"0",".",".")}}</td></tr>
                       <tr><td>Dj: {!! $mix->DJ->nombreDj!!}</td></tr>
                       </td></tr>
+                      <tr><td>Generos: @foreach ($mix->generos as $genero)
+                        {!! $genero->nombreGe !!},
+                      @endforeach 
                       <tr><td>Interpretes: @foreach ($mix->interpretes as $interprete)
                         {!! $interprete->nombreIn !!},
                       @endforeach

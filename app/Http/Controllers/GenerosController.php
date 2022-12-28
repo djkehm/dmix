@@ -117,7 +117,7 @@ class GenerosController extends Controller
             $generos = Genero::all();
             return view('mixes.genero_buscador', compact('generos', 'buscarporGenero'));
         }else{
-            $generos = Genero::where('nombreGe', 'like', '%'.$buscarporGenero.'%')->get();
+            $generos = Genero::where('nombreGe', 'like', '%'.$buscarporGenero.'%')->distinct()->get();
             return view('mixes.genero_buscador', compact('generos', 'buscarporGenero'));
         }
 
@@ -146,7 +146,7 @@ class GenerosController extends Controller
             ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
             ->orWhere('mixes.nombreMix', 'like', '%'.$buscarporGeneroMix.'%')
             ->orWhere('interpretes.nombreIn', 'like', '%'.$buscarporGeneroMix.'%')
-            ->where('generos.id', '=', $genero->id)->get();
+            ->where('generos.id', '=', $genero->id)->distinct()->get();
             return view('mixes.filtrar_genero', compact('mixes', 'buscarporGeneroMix'));
         }
 
