@@ -13,6 +13,9 @@ class Mix extends Model
 
     protected $table = 'mixes';
     public $timestamps = false;
+    protected $fillable = [
+        'nombreMix'
+    ];
     public function dj(){
         return $this->belongsTo('App\Models\Dj');
     }

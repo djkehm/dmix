@@ -11,11 +11,6 @@
 
 @section('contenido-principal')
 
-<form class="d-flex mb-3 p-3" name="buscador">
-  <input name="buscarporGeneroMix" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{$buscarporGeneroMix}}">
-  <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
-
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm">
   @if($errors->any())
       <div class="alert alert-danger">
@@ -55,13 +50,10 @@
                       <tr><td>Precio: ${{number_format( $mix->precio  ,"0",".",".")}}</td></tr>
                       <tr><td>Dj: {!! $mix->DJ->nombreDj!!}</td></tr>
                       </td></tr>
-                      <tr><td>Generos: @foreach ($mix->generos as $genero)
-                        {!! $genero->nombreGe !!},
-                      @endforeach                    
                       <tr><td>Interpretes: @foreach ($mix->interpretes as $interprete)
                         {!! $interprete->nombreIn !!},
                       @endforeach
-                    </td></tr>
+                        
                   </tbody>
                 
                   <tfoot>

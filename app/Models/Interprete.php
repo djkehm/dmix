@@ -11,6 +11,9 @@ class Interprete extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'interpretes';
     public $timestamps = false;
+    protected $fillable = [
+        'nombreIn'
+    ];
 
 
     public function mixes(){

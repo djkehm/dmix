@@ -49,84 +49,45 @@
                             <label for="precio" class="form-label">Precio</label>
                             <input type="number" id="precio" name="precio" class="form-control" placeholder="Precio $">
                         </div>
-
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Ingrese los nombres de los interpretes, separados por una ','" id="interpretes" name="interpretes" style="height: 100px"></textarea>
-                            <label for='interpretes'>Interprete</label>
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="interpretes">Ingrese los nombres de los interpretes, separados por una ','</label>
-                        </div>
                         
 
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            <div>
+                                <div id="formulario" class='mb-4 pb-4' name='Genero'>
+                                    <label for="Generos">Generos</label>
+                                    <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
+                                    <div class="input-group">
+                                        <select name="generos[]" class="js-example-basic-single col-md-6" for='Genero'>
+                                            @foreach( $generos as $genero)
+                                                <option value="{{ $genero->id }}">{{ $genero->nombreGe }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                            </div>
+                            
 
-                        <div id="formulario" class='mb-4'>
-                        <label for="Generos">Generos</label>
-                        <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
-                        <div class="input-group">
-                            <select name="generos[]" class="js-example-basic-single col-md-6">
-                                @foreach( $generos as $genero)
-                                    <option value="{{ $genero->id }}">{{ $genero->nombre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <select class="form-control" id="search" style="width:500px;" name="user_id"></select>
-                        <script type="text/javascript">
-
-                            var path = {{route('busqueda')}};
-                        
-                          
-                        
-                            $('#search').select2({
-                        
-                                placeholder: 'Select an user',
-                        
-                                ajax: {
-                        
-                                  url: path,
-                        
-                                  dataType: 'json',
-                        
-                                  delay: 250,
-                        
-                                  processResults: function (genero) {
-                        
-                                    return {
-                        
-                                      results:  $.map(genero, function (item) {
-                        
-                                            return {
-                        
-                                                text: item.nombre,
-                        
-                                                id: item.id
-                        
-                                            }
-                        
-                                        })
-                        
-                                    };
-                        
-                                  },
-                        
-                                  cache: true
-                        
-                                }
-                        
-                              });
-                        
-                          
-                        
-                        </script>
+                        <div id="formulario2" class='mb-4 pt-3'>
+                            <label for="Interpretes">Interpretes</label>
+                            <button type="button" class="clonar2 btn btn-secondary btn-sm">+</button>
+                            <div class="input-group2">
+                                <select name="interpretes[]" class="js-example-basic-single col-md-6">
+                                    @foreach( $interpretes as $interprete)
+                                        <option value="{{ $interprete->id }}">{{ $interprete->nombreIn }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         
                         
 
                         </div>
-                        <div class="card-footer d-grid gap-1 mb-4 text-center">
-                            <button id="registrar-btn" class="btn btn-outline-info text-center" type="submit">Agregar Mix</button>
+                        <div>
+
+                            <div class="card-footer d-grid gap-1 mb-4 text-center">
+                                <button id="registrar-btn" class="btn btn-outline-info text-center" type="submit">Agregar Mix</button>
+                            </div>
                         </div>
+                        
                     </form>
                     </div>
 

@@ -11,6 +11,9 @@ class Dj extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'djs';
+    protected $fillable = [
+        'nombreDj'
+    ];
 
     public function usuario(){
         return $this->hasOne('App\Models\Usuario', 'id_usuario');

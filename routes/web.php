@@ -19,6 +19,7 @@ use App\Http\Controllers\{HomeController, UsuariosController, DjsController, Mix
  //   return view('welcome');
 //});
 
+
 //EDITAR USUARIO
 Route::get('/editar/cuenta/{id}', [UsuariosController::class, 'editar_usuario'])->name('Editar Datos');
 Route::post('/editar/cuenta/{id}', [HomeController::class, 'editar_usuario'])->name('Editar Datos');
@@ -55,7 +56,9 @@ Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/sign-in', [HomeController::class, 'signin'])->name('signin');
 Route::get('/catalogo', [HomeController::class, 'catalogo'])-> name('Catalogo');
 Route::get('/registro-dj',[HomeController::class, 'registroDj'])->name('registroDj');
+
 Route::get('/catalogo', [MixesController::class, 'index'])->name('Catalogo');
+Route::get('/catalogo/filtroGenero/{id}', [MixesController::class, 'filtroGenero'])->name('Filtrado Genero');
 
 
 
@@ -83,6 +86,12 @@ Route::post('/djs/store', [DjsController::class, 'store'])->name('djs.store');
 Route::get('/tipo_usuario', [UsuarioController::class, 'tipo_usuario'])->name('tipo_usuario');
 
 
+//RANKING
+Route::get('/ranking/prueba', [MixesController::class, 'ranking_mix']);
+Route::get('/ranking/dj', [MixesController::class, 'ranking_dj'])->name('Rankind DJ');
+Route::get('/ranking/generos', [MixesController::class, 'ranking_genero'])->name('Ranking Genero');
+Route::get('/ranking/interpretes', [MixesController::class, 'ranking_interpretes']);
+
 
 //Route::resource('/djs', DjsController::class);
 
@@ -92,6 +101,11 @@ Route::get('/tipo_usuario', [UsuarioController::class, 'tipo_usuario'])->name('t
 
 //SOLICITUDES
 Route::get('/solicitudes/usuario', [Solicitud_ventasController::class, 'solicitud_cliente']);
+
+//INTERPRETE:
+Route::get('/interpretes', [HomeController::class, 'listar_interpretes'])->name('Interpretes');
+Route::get('/interpretes', [InterpretesController::class, 'listado'])->name('Interpretes');
+
 
 
 //ADMIN
@@ -104,8 +118,6 @@ Route::middleware(['auth', 'solo_usuario_dj'])-> group(function(){
 
     Route::get('/agregar/mix', [HomeController::class, 'agregarMix'])->name('Agregar Mix');
     Route::get('/agregar/mix', [GenerosController::class, 'index'])->name('Agregar Mix');
-    Route::get('/agregar/mix', [BusquedaController::class, 'index'])->name('Agregar Mix');
-    Route::get('/agregar/mix', [BusquedaController::class, 'buscador'])->name('Agregar Mix');
 
     Route::get('/ExtraerDj', [DjsController::class, 'extraerIdDj'])->name('extraer.id');
     Route::post('/mixes/store', [MixesController::class, 'store'])->name('mixes.store');
@@ -168,14 +180,39 @@ Route::middleware(['auth', 'solo_usuario_admin'])-> group(function(){
     //DJS-ADMIN
     Route::get('/admin/djs', [HomeController::class, 'djs_admin'])->name("DJ's");
     Route::get('/admin/djs', [DjsController::class, 'djs_admin'])->name("DJ's");
-    Route::get('/admin/djs/eliminar/{id}', [DjsController::class, 'eliminarDjAdmin'])->name('Eliminar DJ');
+    Route::get('/admin/djs/eliminar/{id}', [DjsController::class, 'validacionContenido'])->name('Eliminar DJ');
+    Route::get('/admin/djs/eliminar/confirm/{id}', [DjsController::class, 'djContenido'])->name('Confirmado DJ');
 
     
 
     //GENEROS-ADMIN
     Route::get('/admin/generos', [HomeController::class, 'generos_admin'])->name('Generos');
     Route::get('/admin/generos', [GenerosController::class, 'generos_admin'])->name('Generos');
+    //BORRAR GENERO
+    Route::get('/admin/generos/eliminar/{id}', [GenerosController::class, 'borrar_genero'])->name('Eliminar Genero');
+    //AGREGAR GENERO
+    Route::get('/admin/generos/agregar', [HomeController::class, 'agregar_genero'])->name('Agregar Genero');
+    Route::post('/admin/generos/agregar/enviar', [GenerosController::class, 'store'])->name('generos.store');
+    //EDITAR
+    Route::get('/admin/generos/editar/{id}',[HomeController::class, 'edit_genero'])->name('Editar Genero');
+    Route::get('/admin/generos/editar/{id}', [GenerosController::class, 'edit'])->name('Editar Genero');
+    Route::get('/admin/generos/editar/confirm/{id}', [GenerosController::class, 'confirm_edit'])->name('confirm.genero');
+    Route::post('/admin/generos/update/{id}', [GenerosController::class, 'update'])->name('generos.update');
+    
+
     //INTERPRETES-ADMIN
     Route::get('/admin/interpretes', [HomeController::class, 'interpretes_admin'])->name('Interpretes');
     Route::get('/admin/interpretes', [InterpretesController::class, 'interpretes_admin'])->name('Interpretes');
+    //BORRAR INTERPRETE
+    Route::get('/admin/interpretes/eliminar/{id}', [InterpretesController::class, 'destroy'])->name('destoy.interprete');
+    //AGREGAR INTERPRETE
+    Route::post('/admin/interpretes/agregar/enviar', [InterpretesController::class, 'store'])->name('interprete.store');
+    Route::get('/admin/interpretes/agregar', [HomeController::class, 'agregar_interprete'])->name('Agregar Interprete');
+    //EDITAR INTERPRETE
+    Route::get('admin/interpretes/editar/{id}', [HomeController::class, 'edit_interprete'])->name('Editar Interprete');
+    Route::get('admin/interprete/editar/{id}', [InterpretesController::class, 'edit'])->name('edit.interprete');
+    Route::get('admin/interprete/editar/confirm/{id}', [InterpretesController::class, 'confirm_edit'])->name('Editar Interprete');
+    Route::post('admin/interprete/editar/{id}/enviar', [InterpretesController::class, 'update'])->name('update.interprete');
+
+    Route::get('/pruebaJS', [DjsController::class, 'pruebaJS'])->name('pruebaJS');
 });

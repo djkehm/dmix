@@ -18,13 +18,17 @@
                 </thead>
                 
                 <tbody>
-                    <tr><td>Nombre: {!! $mix->NameMix !!}</td></tr>
+                    <tr><td>Nombre: {!! $mix->nombreMix !!}</td></tr>
                     <tr><td>Descripción: {!! $mix->descripcion !!}</td></tr>
                     <tr><td>Duración: {!! $mix->duracion !!}</td></tr>
                     <tr><td>Fecha de publicación: {!! $mix->fecha_publicacion !!}</td></tr>
                     <tr><td>Precio: ${{number_format( $mix->precio  ,"0",".",".")}}</td></tr>
                     <tr><td>Generos: @foreach ($mix->generos as $genero)
-                      {!! $genero->nombre !!},
+                      {!! $genero->nombreGe !!},
+                    @endforeach
+                    </td></tr>
+                    <tr><td>Interpretes: @foreach ($mix->interpretes as $interprete)
+                      {!! $interprete->nombreIn !!},
                     @endforeach
                     </td></tr>
                 </tbody>

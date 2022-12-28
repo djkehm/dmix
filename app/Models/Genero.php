@@ -12,6 +12,7 @@ class Genero extends Model
     use HasFactory, SoftDeletes;
     
     protected $table = 'generos';
+    
     public $timestamps = false;
 
     public function mixes(){

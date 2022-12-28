@@ -24,12 +24,12 @@
                   </thead>
                   
                   <tbody>
-                      <tr><td>Nombre: {!! $solicitud->mix->nombre !!}</td></tr>
+                      <tr><td>Nombre: {!! $solicitud->mix->nombreMix !!}</td></tr>
                       <tr><td>Descripción: {!! $solicitud->mix->descripcion !!}</td></tr>
                       <tr><td>Duración: {!! $solicitud->mix->duracion !!}</td></tr>
                       <tr><td>Fecha de actualizacion: {!! $solicitud->fecha_actualizacion !!}</td></tr>
                       <tr><td>Precio: ${{number_format( $solicitud->mix->precio  ,"0",".",".")}}</td></tr>
-                      <tr><td>Dj: {!! $solicitud->mix->dj->nombre !!}</td></tr>
+                      <tr><td>Dj: {!! $solicitud->mix->dj->nombreDj !!}</td></tr>
                       <tr><td>
                         @if($solicitud->estado=='P')
                             Estado: Pendiente

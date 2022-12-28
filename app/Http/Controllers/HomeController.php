@@ -46,6 +46,14 @@ class HomeController extends Controller
     }
 
     public function djs(){
+        $rds = Solicitud_venta::selectRaw("count(mix_id) as cantidad")
+        ->select('djs.id','djs.nombreDj', Solicitud_venta::raw('count(mix_id)'))
+        ->join('mixes', 'mix_id', '=', 'mixes.id')
+        ->join('djs', 'mixes.dj_id', '=', 'djs.id')
+        ->where('estado', '=', 'A')
+        ->groupBy('djs.nombreDj', 'id')
+        ->orderBy(Solicitud_venta::raw('count(mix_id)'), 'DESC')->take(3)
+        ->get();
         return view('dj.listar_dj');
     }
 
@@ -92,6 +100,10 @@ class HomeController extends Controller
     public function editar_usuario(){
         return view('cuenta.editar_usuario');
     }
+    
+    public function listar_interprete(){
+        return view('mixes.interprete.listar_interprete');
+    }
 
 
 
@@ -111,5 +123,22 @@ class HomeController extends Controller
     }
     public  function interpretes_admin(){
         return view('admin.lista_interpretes');
+    }
+
+    public function agregar_genero(){
+        return view('admin.genero.agregar_genero');
+    }
+
+    public function edit_genero(){
+        return view('admin.genero.editar_genero');
+    }
+
+    public function agregar_interprete(){
+        return view('admin.interprete.agregar_interprete');
+    }
+
+    public function edit_interprete(){
+        
+        return view('admin.interprete.editar_interprete');
     }
 }

@@ -10,6 +10,22 @@
 
 
 @section('contenido-principal')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@php($rms = session('rms'))
+@if ($rms<>'')
+    @foreach ($rms as $rm)
+    @php($texto[] = $rm->nombreMix)
+    @endforeach
+    <script>
+          Swal.fire(
+             'Mix más vendidos!',
+             '1-.{{$texto[0]}} <br>2-.{{$texto[1]}}</br> 3-.{{$texto[2]}}',
+             'info'
+           )
+        //window.alert(@json($rm->nombreMix))
+      </script>
+@endif
+
 
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm">
   @if($errors->any())
@@ -30,8 +46,20 @@
     
   @endif
 
+  <form class="d-flex mb-3" name="buscador">
+    <input name="buscarpor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="{{$buscarpor}}">
+    <button class="btn btn-outline-success" type="submit">Buscar por Nombre Mix</button>
+  </form>
+  
+
+  <div>
+
+
+
+
     @foreach($mixes as $mix)
-    <div class="row gx-5 rounded mb-0 pb-3">
+    @if($mix->dj->estado_cuenta == 'A')
+    <div class="row gx-5 rounded mb-0 pb-3 mt-3">
        
         <div class="col rounded-bottom mb-0">
          
@@ -42,17 +70,17 @@
                   </thead>
                   
                   <tbody>
-                      <tr><td>Nombre: {!! $mix->nombre !!}</td></tr>
+                      <tr><td>Nombre: {!! $mix->nombreMix !!}</td></tr>
                       <tr><td>Descripción: {!! $mix->descripcion !!}</td></tr>
                       <tr><td>Duración: {!! $mix->duracion !!}</td></tr>
                       <tr><td>Fecha de publicación: {!! $mix->fecha_publicacion !!}</td></tr>
                       <tr><td>Precio: ${{number_format( $mix->precio  ,"0",".",".")}}</td></tr>
-                      <tr><td>Dj: {!! $mix->dj->nombre !!}</td></tr>
+                      <tr><td>Dj: {!! $mix->dj->nombreDj !!}</td></tr>
                       <tr><td>Generos: @foreach ($mix->generos as $genero)
-                        {!! $genero->nombre !!},
+                        {!! $genero->nombreGe !!},
                       @endforeach
                       <tr><td>Interpretes: @foreach ($mix->interpretes as $interprete)
-                        {!! $interprete->nombre !!},
+                        {!! $interprete->nombreIn !!},
                       @endforeach
                   </tbody>
                 
@@ -71,10 +99,32 @@
         </div>
         
     </div>
-   
+   @endif
     @endforeach
   </div>
 
-  
+
+@section('js')
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+{{-- @php($rms = session('rms'))
+@if ($rms<>'')
+    @foreach ($rms->all() as $rm)
+    <script>
+        // Swal.fire(
+        //     'No se puede agregar!',
+        //     '{{ $rm->nombreMix}}',
+        //     'error'
+        //   )
+        console.log($rm->nombreMix)
+      </script>
+    @endforeach
+@endif --}}
+
+
+
+@endsection
 
 @endsection

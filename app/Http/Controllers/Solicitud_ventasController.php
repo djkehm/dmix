@@ -128,7 +128,8 @@ class Solicitud_ventasController extends Controller
     
     public function solicitud_cliente(){
         $auth_id = Auth::user()->id;
-        $solicitudes= Solicitud_venta::where('solicitud_ventas.usuario_id', '=', $auth_id)->get();
+        $solicitudes= Solicitud_venta::select('solicitud_ventas.*')
+        ->where('solicitud_ventas.usuario_id', '=', $auth_id)->get();
 
         return view('solicitudes_cliente')->with('solicitudes', $solicitudes);
     }
@@ -138,7 +139,7 @@ class Solicitud_ventasController extends Controller
         $dj = Dj::select('djs.id')->where('usuario_id', '=',$auth_id)->value('id');
         $solicitudes= Solicitud_venta::join('mixes','mixes.id', '=', 'mix_id')
         ->join('usuarios','usuario_id','=','usuarios.id')
-        ->select('solicitud_ventas.id','usuarios.nombre as nombreClie', 'mixes.nombre', 'usuarios.numero_celular', 'estado', 'usuarios.email','fecha_actualizacion','mixes.precio')
+        ->select('solicitud_ventas.id','usuarios.nombre as nombreClie', 'mixes.nombreMix', 'usuarios.numero_celular', 'estado', 'usuarios.email','fecha_actualizacion','mixes.precio')
         ->where('mixes.dj_id', '=', $dj)->get();
 
         return view('dj.solicitudes_dj')->with('solicitudes', $solicitudes);

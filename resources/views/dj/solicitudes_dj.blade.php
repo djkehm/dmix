@@ -27,7 +27,7 @@
                   </thead>
                   
                   <tbody>
-                      <tr><td>Nombre Mix: {!! $solicitud->nombre !!}</td></tr>
+                      <tr><td>Nombre Mix: {!! $solicitud->nombreMix !!}</td></tr>
                       <tr><td>Nombre Cliente: {!! $solicitud->nombreClie !!}</td></tr>
                       <tr><td>Correo Cliente: {!! $solicitud->email !!}</td></tr>
                       <tr><td>Numero Celular Cliente: {!! $solicitud->numero_celular !!}</td></tr>

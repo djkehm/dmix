@@ -107,6 +107,8 @@
       }).then((result) => {
         if (result.isConfirmed) {
           this.submit();
+          //window.location.href = "{{ route('pruebaJS')}}";
+
         }
       })
     })

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\{Auth, Hash};
 use App\Http\Requests\UsuariosRequest;
 use App\Http\Controllers\DjsController;
 use App\Models\Dj;
+use App\Models\Solicitud_venta;
 
 class UsuariosController extends Controller
 {
@@ -136,17 +137,29 @@ class UsuariosController extends Controller
             //CREDENCIALES CORRECTAS
             $usuario = Usuario::where('email',$request->email)->first();
 
+            //RANKING MIX
+            $ranking_mixes = Solicitud_venta::selectRaw("count(solicitud_ventas.mix_id) as cantidad")
+            ->select("mixes.nombreMix", Solicitud_venta::raw("count(mix_id)"))
+            ->join("mixes", "solicitud_ventas.mix_id", "=", "mixes.id")
+            ->where("estado", "=", "A")
+            ->groupBy("mixes.nombreMix", "mixes.id")
+            ->orderBy(Solicitud_venta::raw("count(solicitud_ventas.mix_id)"), "DESC")->take(3)
+            ->get();
+            $rmdecode = json_decode($ranking_mixes);
+            
 
+            //MENSAJE SEGUN ESTADO CUENTA
             if($usuario->estado_cuenta == 'IA'){
                 return back()->withErrors('Has sido inhabilitado por el administrador. Si quieres mas información toma contacto con administracion@dmix.cl');
             }elseif($usuario->estado_cuenta == 'BU'){
                 return back()->withErrors('Esta cuenta fue borrada por el usuario.');
             }
-            
+
+            //TIPO DE USUARIO
             if($usuario->tipo_usuario=='C'){
-                return redirect()->route('Catalogo');
+                return redirect()->route('Catalogo')->with('rms', $rmdecode);
             }elseif($usuario->tipo_usuario == 'D'){
-                return redirect()->route('Catalogo');
+                return redirect()->route('Catalogo')->with('rms', $rmdecode);
             }elseif($usuario->tipo_usuario == 'A'){
                 return redirect()->route('Usuarios');
             }

@@ -16,11 +16,20 @@ class DjsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $djs = Dj::all();
+        $buscarporDj = $request->get('buscarporDj');
+        if(!$buscarporDj){
+            $djs = Dj::all();;
+            return view('dj.listar_dj', compact('djs', 'buscarporDj'));
+        }else{
+            $djs = Dj::where('nombreDj', 'like', '%'.$buscarporDj.'%')->get();
+            return view('dj.listar_dj', compact('djs', 'buscarporDj'));
+        }
 
-        return view('dj.listar_dj')->with('djs', $djs);
+       
+
+        return view('dj.listar_dj',compact('djs', 'buscarporDj'));
     }
 
     /**
@@ -146,10 +155,24 @@ class DjsController extends Controller
         ->where('mixes.dj_id', '=', $dj->id)->get();
 
         if($mixes->count()<>0 || $solicitudes->count()<>0){
-            return $solicitudes;
+            return redirect()->route("DJ's")->with('dj', $dj->id);
         }else{
-            return 'No funciono';
+            $dj->estado_cuenta = 'IA';
+            $dj->save();
+            return back()->with('mensaje', 'ok');
         }
         
+    }
+
+    public function pruebaJS(){
+        return 'Funciono';
+    }
+
+    public function djContenido($id){
+        $dj = Dj::findOrFail($id);
+        $dj->estado_cuenta = 'IA';
+        $dj->save();
+        return redirect()->route("DJ's")->with('mensaje', 'ok');
+
     }
 }

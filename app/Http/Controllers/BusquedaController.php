@@ -16,7 +16,7 @@ class BusquedaController extends Controller
     public function index()
     {
         //
-        return view('dj.agregar_mix');
+        return view('mixes.catalogo');
     }
 
     /**
@@ -86,13 +86,13 @@ class BusquedaController extends Controller
     }
 
     public function buscador(Request $request){
-        $genero = [];
+        $generos = [];
 
-        if($request->filled('q')){
+        if($request->has('q')){
+            $busqueda = $request->q;
+            $genero = Genero::select('id',"nombreGe")
 
-            $genero = Genero::select("nombre", "id")
-
-                        ->where('name', 'LIKE', '%'. $request->get('q'). '%')
+                        ->where('name', 'LIKE', "%$busqueda%")
 
                         ->get();
 
@@ -100,6 +100,6 @@ class BusquedaController extends Controller
 
     
 
-        return response()->json($genero);
+        return response()->json($generos);
     }
 }

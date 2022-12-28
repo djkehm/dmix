@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Genero;
 use Illuminate\Http\Request;
 use App\Models\Mix;
-
+use App\Http\Requests\GenerosRequest;
+use App\Models\Interprete;
 class GenerosController extends Controller
 {
     /**
@@ -17,8 +18,9 @@ class GenerosController extends Controller
     {
         //
         $generos = Genero::all();
+        $interpretes = Interprete::all();
         
-        return view('dj.agregar_mix', compact('generos'));
+        return view('dj.agregar_mix', compact('generos', 'interpretes'));
         
     }
 
@@ -38,9 +40,13 @@ class GenerosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GenerosRequest $request)
     {
         //
+        $genero = new Genero();
+        $genero->nombreGe = $request->nombreGe;
+        $genero->save();
+        return redirect()->route('Generos')->with('mensaje', 'Aok');
     }
 
     /**
@@ -60,10 +66,20 @@ class GenerosController extends Controller
      * @param  \App\Models\Genero  $genero
      * @return \Illuminate\Http\Response
      */
-    public function edit(Genero $genero)
+    public function edit($id)
     {
         //
-    }
+        $genero = Genero::findOrFail($id);
+        $mixes = Mix::join('mix_generos', 'mix_id', '=', 'mixes.id')
+        ->join('generos', 'generos.id', '=', 'genero_id')
+        ->where('genero_id', '=', $id)->get();
+        if(!$mixes->count()){
+            return view('admin.genero.editar_genero')->with('genero', $genero);
+        }else{
+            return back()->with('genero', $id);
+        }
+        
+    }   
 
     /**
      * Update the specified resource in storage.
@@ -72,9 +88,13 @@ class GenerosController extends Controller
      * @param  \App\Models\Genero  $genero
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genero $genero)
+    public function update(Request $request, $id)
     {
         //
+        $genero = Genero::findOrFail($id);
+        $genero->nombreGe = $request->nombreGe;
+        $genero->save();
+        return redirect()->route('Generos')->with('mensaje', 'Eok');
     }
 
     /**
@@ -87,24 +107,81 @@ class GenerosController extends Controller
     {
         //
     }
-    public function buscarGenero()
+    public function buscarGenero(Request $request)
     {
         //
-        $generos = Genero::all();
         
-        return view('mixes.genero_buscador', compact('generos'));
+        
+        $buscarporGenero = $request->get('buscarporGenero');
+        if(!$buscarporGenero){
+            $generos = Genero::all();
+            return view('mixes.genero_buscador', compact('generos', 'buscarporGenero'));
+        }else{
+            $generos = Genero::where('nombreGe', 'like', '%'.$buscarporGenero.'%')->get();
+            return view('mixes.genero_buscador', compact('generos', 'buscarporGenero'));
+        }
+
+    
+        
+        return view('mixes.genero_buscador', compact('generos', 'buscarporGenero'));
     }
 
-    public function filtrarGenero($id){
-        $mixes = Mix::join('mix_generos', 'mixes.id', '=', 'mix_generos.mix_id')
-        ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
-        ->where('generos.id', '=', $id)->get();
+    public function filtrarGenero($id, Request $request){
+        
+        
+        $buscarporGeneroMix = $request->get('buscarporGeneroMix');
+        $genero = Genero::findOrFail($id);
+        if(!$buscarporGeneroMix){
+            $mixes = Mix::select('mixes.*')
+            ->join('mix_generos', 'mixes.id', '=', 'mix_generos.mix_id')
+            ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
+            ->where('generos.id', '=', $genero->id)->get();
 
-        return view('mixes.filtrar_genero', compact('mixes'));
+            return view('mixes.filtrar_genero', compact('mixes', 'buscarporGeneroMix'));
+        }else{
+            $mixes = Mix::select('mixes.*')
+            ->join('mix_interpretes', 'mixes.id', '=', 'mix_interpretes.mix_id')
+            ->join('interpretes', 'interpretes.id', '=', 'mix_interpretes.interprete_id')
+            ->join('mix_generos', 'mixes.id', '=', 'mix_generos.mix_id')
+            ->join('generos', 'mix_generos.genero_id', '=', 'generos.id')
+            ->orWhere('mixes.nombreMix', 'like', '%'.$buscarporGeneroMix.'%')
+            ->orWhere('interpretes.nombreIn', 'like', '%'.$buscarporGeneroMix.'%')
+            ->where('generos.id', '=', $genero->id)->get();
+            return view('mixes.filtrar_genero', compact('mixes', 'buscarporGeneroMix'));
+        }
+
+
+        return view('mixes.filtrar_genero', compact('mixes', 'buscarporGeneroMix'));
     }
 
     public function generos_admin(){
         $generos = Genero::all();
         return view('admin.lista_generos', compact('generos'));
+    }
+
+    public function borrar_genero($id){
+        $genero = Genero::findOrFail($id);
+
+        $mixes = Mix::join('mix_generos', 'mix_id', '=', 'mixes.id')
+        ->join('generos', 'generos.id', '=', 'genero_id')
+        ->where('genero_id', '=', $id)->get();
+
+        if(!$mixes->count()){
+            $genero->delete();
+            return back()->with('mensaje', 'ok');
+        }else{
+            return back()->with('mensaje', 'no');
+        }
+    }
+
+    public function confirm_edit($id){
+        $genero = Genero::findOrFail($id);
+        return view('admin.genero.editar_genero')->with('genero', $genero);
+    }
+
+    public function generoForFiltro(){
+        $generos = Genero::all();
+
+        return view('mixes.catalogo', compact('generos'));
     }
 }
