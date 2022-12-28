@@ -15,10 +15,10 @@ $('.clonar').click(function() {
     $clone.appendTo('#formulario');
 });
 
-// In your Javascript (external .js resource or <script> tag)
-$(document).ready(function() {
-  $('.js-example-basic-single').select2();
-});
+// // In your Javascript (external .js resource or <script> tag)
+// $(document).ready(function() {
+//   $('.js-example-basic-single').select2();
+// });
 
 
 $('.clonar2').click(function() {
@@ -38,8 +38,8 @@ $('.clonar2').click(function() {
   $clone.appendTo('#formulario2');
 });
 
-// In your Javascript (external .js resource or <script> tag)
-$(document).ready(function() {
-$('.js-example-basic-single').select2();
-});
+// // In your Javascript (external .js resource or <script> tag)
+// $(document).ready(function() {
+// $('.js-example-basic-single').select2();
+// });
 

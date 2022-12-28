@@ -79,6 +79,7 @@ class MixesController extends Controller
         $mix->fecha_publicacion = $now;
         $mix->precio = $request->precio;
         $mix->dj_id = $dj;
+        $mix->save();
 
 
 
