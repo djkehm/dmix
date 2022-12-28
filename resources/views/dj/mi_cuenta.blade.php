@@ -82,6 +82,11 @@
                 <a class="cta" href={{ route('Editar DJ', $dj->id)}}><button>Editar</button></a>
             </div>
         @endforeach
+
+        <div class="col-6 col-md-4  pb-3">
+            ¿Desea eliminar la cuenta de Dj?
+            <a class="cta" href=""><button>Eliminar</button></a>
+        </div>
     </div>
 
 </body>

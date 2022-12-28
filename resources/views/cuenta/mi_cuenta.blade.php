@@ -41,6 +41,11 @@
             ¿Desea editar su informacion?
             <a class="cta" href="{{route('Editar Datos', Auth::user()->id)}}"><button>Editar</button></a>
         </div>
+
+        <div class="col-6 col-md-4  pb-3">
+            ¿Desea eliminar la cuenta?
+            <a class="cta" href=""><button>Eliminar</button></a>
+        </div>
     </div>
 
 </body>
