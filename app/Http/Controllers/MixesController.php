@@ -73,20 +73,13 @@ class MixesController extends Controller
 
 
         //ALMACENAR LOS MIX
-        $mix->nombre = $request->nombre;
+        $mix->nombreMix = $request->nombre;
         $mix->descripcion = $request->descripcion;
         $mix->duracion = $request->duracion;
         $mix->fecha_publicacion = $now;
         $mix->precio = $request->precio;
         $mix->dj_id = $dj;
 
-
-        //ALMACENAR LOS INTERPRETES
-        $mix->save();
-        $interprete = new Interprete();
-        $interprete->nombre = $request->interpretes;
-        $interprete->mix_id = $mix->id;
-        $interprete->save();
 
 
         //ALMACENAR RELACION ENTRE GENERO Y MIX
@@ -129,7 +122,6 @@ class MixesController extends Controller
     {
         //
         $mixes = Mix::findOrFail($id);
-        $interprete = Interprete::select('nombre')->where('mix_id', '=', $id);
         return view('mixes.editar_mix',compact('mixes'));
     }
 
@@ -144,7 +136,7 @@ class MixesController extends Controller
     {
         //
         $mixes = Mix::findOrFail($id);
-        $mixes->nombre = $request->nombre;
+        $mixes->nombreMix = $request->nombre;
         $mixes->descripcion = $request->descripcion;
         $mixes->duracion = $request->duracion;
         $mixes->precio = $request->precio;

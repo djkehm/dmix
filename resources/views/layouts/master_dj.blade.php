@@ -39,6 +39,7 @@
             <li class="nav-item"><a href="{{route('Catalogo')}}">Catalogo</a></li>
             <li><a href="{{route("Dj's")}}">DJ's</a></li>
             <li><a href="{{route("Buscar Genero")}}">Buscar genero</a></li>
+            <li><a href="{{route('Buscar Interpretes')}}">Buscar Interprete</a></li>
           </ul>
           <!--ITEMS CENTRO-->
 

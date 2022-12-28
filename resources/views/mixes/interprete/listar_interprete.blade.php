@@ -30,6 +30,7 @@
   <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
 
+<div><a class="cta p-3" href=><button>Ver ranking interpretes</button></a></div>
 
 <div class="container overflow-hidden pt-5 rounded-bottom mb-0 table-responsive-sm">
     @foreach($interpretes as $interprete)
@@ -53,7 +54,7 @@
                       </td>
                     </tbody>
                 
-                    <div><a class="cta p-3" href=><button>Ver ranking interpretes</button></a></div>
+
                 </table>
                 
             </div>

@@ -103,8 +103,8 @@ Route::get('/ranking/interpretes', [MixesController::class, 'ranking_interpretes
 Route::get('/solicitudes/usuario', [Solicitud_ventasController::class, 'solicitud_cliente']);
 
 //INTERPRETE:
-Route::get('/interpretes', [HomeController::class, 'listar_interpretes'])->name('Interpretes');
-Route::get('/interpretes', [InterpretesController::class, 'listado'])->name('Interpretes');
+Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
+Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
 
 
 
@@ -166,6 +166,9 @@ Route::middleware(['auth', 'solo_usuario_dj'])-> group(function(){
     Route::get('/solicitudes/dj', [HomeController::class, 'solicitud_Dj'])->name('Solicitudes');    
     Route::get('/solicitudes/dj', [Solicitud_ventasController::class, 'solicitud_dj'])->name('Solicitudes');
 //PRUEBAS:
+
+    Route::get('/buscar/interpretes', [HomeController::class, 'listar_interpretes'])->name('Buscar Interpretes');
+    Route::get('/buscar/interpretes', [InterpretesController::class, 'listado'])->name('Buscar Interpretes');
 
 });
 
